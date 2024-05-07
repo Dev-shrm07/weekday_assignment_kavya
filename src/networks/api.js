@@ -1,3 +1,4 @@
+// A standard function for fetching the data from api just based on request location and params
 async function fetchData(input, init) {
   const response = await fetch(input, init);
   if (response.status === 304) {
@@ -11,6 +12,8 @@ async function fetchData(input, init) {
     throw Error(err);
   }
 }
+
+//fetching the data from weekday api
 
 export async function getJobs() {
   const response = await fetchData(

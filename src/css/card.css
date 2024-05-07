@@ -1,0 +1,85 @@
+.card-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1em 2em;
+    border: 1.5px solid rgba(203, 203, 203, 0.553);
+    border-radius: 20px;
+    width: 25%;
+    margin: 2rem;
+}   
+
+.update{
+    font-size: 0.5rem;
+    padding: 0.2em 0.1em;
+    border: 0.5px solid rgba(184, 184, 184, 0.899);
+    border-radius: 8px;
+    width: 35%;
+    margin-bottom: 1.3rem;
+
+}
+
+.logo-title-container{
+    display: flex;
+    
+    
+}
+
+.logo-container>img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.title-location-details{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.company-name{
+    font-size: 0.8rem;
+    color: rgb(148, 148, 148);
+    font-weight: 600;
+}
+
+.role{
+    font-size: 0.78rem;
+    
+}
+.location{
+    font-size: 0.60rem;
+    font-weight: 600;
+}
+
+.salary{
+    margin-top: 0.4rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.73rem;
+    color: rgb(95, 95, 95);
+}
+
+.exp-container{
+    margin-top: 1rem;
+}
+
+.exp-heading{
+    font-size: 0.8rem;
+    color: rgb(148, 148, 148);
+    font-weight: 600;
+}
+.exp{
+    font-size: 0.78rem;
+}
+
+.apply-btn{
+    margin-top: 1rem;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    border: 0px;
+    background-color: aquamarine;
+}
