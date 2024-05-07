@@ -3,3 +3,24 @@
   margin: 0;
   box-sizing: border-box;
 }
+.card-container-box{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three cards in a row by default */
+  gap: 30px;
+}
+.app{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width:900px) {
+  .card-container-box{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+@media (max-width:600px) {
+  .card-container-box{
+    grid-template-columns: repeat(1,1fr);
+  }
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../css/card.css";
 
 const salary_text = (min,max,currency)=>{
@@ -29,14 +29,19 @@ const salary_text = (min,max,currency)=>{
 
 const Card = ({ JobData }) => {
 
+    
     const[showBtn, setShowBtn] = useState(false)
+    const elementRef = useRef(null)
     useEffect(()=>{
        
         const text = document.getElementById('text')
         if (text.scrollHeight >= text.offsetHeight) {
             setShowBtn(true);
-          }
+        }
+        
     },[])
+
+    
     
   return (
     <>
@@ -55,7 +60,7 @@ const Card = ({ JobData }) => {
           </div>
           <div className="salary">Estimated Salary:  {salary_text(JobData.minJdSalary, JobData.maxJdSalary, JobData.salaryCurrencyCode)}</div>
         </div>
-        {JobData.jobDetailsFromCompany && <div className="jd-container" id="text">{JobData.jobDetailsFromCompany}</div>}
+        {JobData.jobDetailsFromCompany && <div className={(JobData.maxExp && JobData.minExp)? 'jd-container' : ((!JobData.maxExp && !JobData.minExp)? 'jd-container_2': 'jd-container_1')} id="text">{JobData.jobDetailsFromCompany}</div>}
         {showBtn && <div className="show-btn">show more</div>}
         {JobData.minExp && <div className="exp-container">
             <div className="exp-heading">Minimum experience </div>

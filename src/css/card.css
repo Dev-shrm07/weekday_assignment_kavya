@@ -4,9 +4,11 @@
     padding: 1em 2em;
     border: 1.5px solid rgba(203, 203, 203, 0.553);
     border-radius: 20px;
-    width: 25%;
+    width: 25vw;
     margin: 2rem;
     height: 80vh;
+    position: relative;
+   
 }   
 
 .update{
@@ -89,24 +91,29 @@
     cursor: pointer;
     border: 0px;
     background-color: aquamarine;
+    justify-self: baseline;
+    position: absolute;
+    bottom: 25px;
+    width: 80%;
 }
 
 @media (max-width: 800px) {
     .card-container{
-        width: 40%;
+        width: 40vw;
+        height: 90vh;
     }
 }
 
 @media (max-width: 600px) {
     .card-container{
-        width: 80%;
+        width: 80vw;
     }
 }
 
 .jd-container{
     
   overflow: hidden;
-  max-height: 30%;
+  max-height: 28%;
  text-overflow: ellipsis;
 }
 
@@ -122,4 +129,16 @@
     color: rgb(0, 0, 134);
 }
   
-  
+.jd-container_1{
+    
+    overflow: hidden;
+    max-height: 35%;
+   text-overflow: ellipsis;
+  }
+
+  .jd-container_2{
+    
+    overflow: hidden;
+    max-height: 53%;
+   text-overflow: ellipsis;
+  }
