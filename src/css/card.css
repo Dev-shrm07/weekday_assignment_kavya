@@ -6,6 +6,7 @@
     border-radius: 20px;
     width: 25%;
     margin: 2rem;
+    height: 80vh;
 }   
 
 .update{
@@ -13,13 +14,17 @@
     padding: 0.2em 0.1em;
     border: 0.5px solid rgba(184, 184, 184, 0.899);
     border-radius: 8px;
-    width: 35%;
+    width: 90px;
+    text-align: center;
     margin-bottom: 1.3rem;
+ 
+    
 
 }
 
 .logo-title-container{
     display: flex;
+    
     
     
 }
@@ -59,9 +64,11 @@
     margin-bottom: 0.7rem;
     font-size: 0.73rem;
     color: rgb(95, 95, 95);
+    
 }
 
 .exp-container{
+    
     margin-top: 1rem;
 }
 
@@ -83,3 +90,36 @@
     border: 0px;
     background-color: aquamarine;
 }
+
+@media (max-width: 800px) {
+    .card-container{
+        width: 40%;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-container{
+        width: 80%;
+    }
+}
+
+.jd-container{
+    
+  overflow: hidden;
+  max-height: 30%;
+ text-overflow: ellipsis;
+}
+
+.show-btn{
+    text-align: center;
+    font-size: 0.7rem;
+    color: blue;
+    cursor: pointer;
+    margin-top: 0.6em;
+}
+
+.show-btn:hover{
+    color: rgb(0, 0, 134);
+}
+  
+  

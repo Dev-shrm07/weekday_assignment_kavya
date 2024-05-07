@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "../css/card.css";
 
 const salary_text = (min,max,currency)=>{
@@ -27,9 +28,19 @@ const salary_text = (min,max,currency)=>{
 }
 
 const Card = ({ JobData }) => {
+
+    const[showBtn, setShowBtn] = useState(false)
+    useEffect(()=>{
+       
+        const text = document.getElementById('text')
+        if (text.scrollHeight >= text.offsetHeight) {
+            setShowBtn(true);
+          }
+    },[])
+    
   return (
     <>
-      <div className="card-container">
+      <div className="card-container" id="container">
         <div className="top-section">
           <div className="update"> ⏳posted 6 days ago</div>
           <div className="logo-title-container">
@@ -44,7 +55,8 @@ const Card = ({ JobData }) => {
           </div>
           <div className="salary">Estimated Salary:  {salary_text(JobData.minJdSalary, JobData.maxJdSalary, JobData.salaryCurrencyCode)}</div>
         </div>
-        <div className="jd-container">{JobData.jobDetailsFromCompany}</div>
+        {JobData.jobDetailsFromCompany && <div className="jd-container" id="text">{JobData.jobDetailsFromCompany}</div>}
+        {showBtn && <div className="show-btn">show more</div>}
         {JobData.minExp && <div className="exp-container">
             <div className="exp-heading">Minimum experience </div>
             <p className="exp">{`${JobData.minExp}`} years</p>
