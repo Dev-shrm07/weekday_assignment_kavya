@@ -12,6 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
 import Header from "./components/Header";
+import Search from "./components/Search";
 
 const App = () => {
   //using use effect with [] as dependecny so that whenever the app is loaded it fetches the data from the api
@@ -27,6 +28,7 @@ const App = () => {
     console.log(newJobs)
     setprevJobs((prevJobs) => [...prevJobs, ...newJobs]);
     setOffset((offset) => offset + newJobs.length);
+    
     setLoading(false)
     
   }
@@ -73,47 +75,13 @@ const App = () => {
     setContent(text);
   };
 
-  const array = [
-    "frontend",
-    "backend",
-    "ios",
-    "techlead",
-    "mobile",
-    "andorid",
-    "fullstack",
-    "design",
-  ];
-  const options = [];
-  array.forEach((element) => {
-    options.push({ label: element, value: element });
-  });
-
-  const [selectedOption, setSelectedOption] = useState(null);
+  
   return (
     <>
       <div className="app">
         
         <Header/>
-
-          {/* <div className="search-filter-containers">
-            <Select
-              isMulti
-              name="colors"
-              options={options}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              placeholder="role"
-              
-              styles={{
-                input:(baseStyles,state)=>({
-                  ...baseStyles,
-                  width:"70px",
-                  height: "10px",
-                  
-                }),
-              }}
-            />
-          </div> */}
+        <Search/>
         </div>
         <div className="card-container-box">
           {prevJobs &&
@@ -137,7 +105,7 @@ const App = () => {
             <Button onClick={handleClose}>Close</Button>
           </DialogActions>
         </Dialog>
-      {/* </div> */}
+    
     </>
   );
 };
