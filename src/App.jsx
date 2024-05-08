@@ -48,7 +48,7 @@ const App = () => {
       getjobs();
     }
 
-    if(window.scrollY==0){
+    if(window.scrollY==0 && prevJobs.length>10){
       setOffset(0)
       setprevJobs([])
       getjobs()
@@ -79,6 +79,17 @@ const App = () => {
   return (
     <>
       <div className="app">
+        <div className="header">
+          <div className="header-text">👋 Ankit</div>
+          <div className="header-logo">💬</div>
+        </div>
+        <div className="search-container">
+          <div className="search-bar-headings">
+            <span className="search-bar-text">Applied Jobs</span>
+            <span className="search-bar-text search-job-heading">Search Jobs</span>
+            <span className="search-bar-text">Suggested Jobs</span>
+          </div>
+        </div>
         <div className="card-container-box">
           { prevJobs && prevJobs.map((m) => {
             return <Card JobData={m} key={m.JdUid} ShowMoreFunction={handleShowMore} />;

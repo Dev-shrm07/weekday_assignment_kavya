@@ -10,11 +10,31 @@
 }
 .app{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
  
 }
 
+.search-conatiner{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-bar-headings{
+  display: flex;
+}
+
+.search-bar-text{
+  padding: 0.5em 1em;
+  font-size: 0.85rem;
+}
+.search-job-heading{
+  border-bottom: 1px solid rgb(0, 0, 181);
+}
 @media (max-width:900px) {
   .card-container-box{
     grid-template-columns: repeat(2,1fr);
@@ -26,3 +46,27 @@
   }
 }
 
+
+.header{
+  display: flex;
+  margin-bottom: 2rem;
+  padding: 1em 2em;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 8vh;
+  border-bottom: 2px solid rgba(101, 101, 101, 0.248);
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.header-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: aquamarine;
+}
