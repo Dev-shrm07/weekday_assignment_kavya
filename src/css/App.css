@@ -70,3 +70,40 @@
   border-radius: 50%;
   background-color: aquamarine;
 }
+
+.search-filter-containers{
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0rem;
+  width: 100%;
+  font-size: 0.7rem;
+}
+
+.role-inp{
+  position: relative;
+}
+
+.options{
+  position: absolute;
+  background-color: white;
+  color: black;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+}
+
+.autocomplete{
+  width: 90px;
+  height: 45px;
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.option-list{
+  font-size: 0.75rem;
+}
+
+
+#options option{
+  font-size: 0.7rem;
+}

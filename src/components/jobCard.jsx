@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import "../css/card.css";
 
+
+//function to show salary based on currency and also handle null min and max values
+
 const salary_text = (min,max,currency)=>{
     if(currency==="INR"){
         if (min && max) {
