@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/card.css";
 
 const salary_text = (min,max,currency)=>{
-    if(currency=="INR"){
+    if(currency==="INR"){
         if (min && max) {
             return `${min} lpa - ${max} lpa ⚠️`;
         } else if (min) {
@@ -27,11 +27,10 @@ const salary_text = (min,max,currency)=>{
     }
 }
 
-const Card = ({ JobData }) => {
+const Card = ({ JobData, ShowMoreFunction }) => {
 
     
     const[showBtn, setShowBtn] = useState(false)
-    const elementRef = useRef(null)
     useEffect(()=>{
        
         const text = document.getElementById('text')
@@ -40,6 +39,10 @@ const Card = ({ JobData }) => {
         }
         
     },[])
+
+    const showMore = () =>{
+      ShowMoreFunction(JobData.jobDetailsFromCompany)
+    }
 
     
     
@@ -61,7 +64,7 @@ const Card = ({ JobData }) => {
           <div className="salary">Estimated Salary:  {salary_text(JobData.minJdSalary, JobData.maxJdSalary, JobData.salaryCurrencyCode)}</div>
         </div>
         {JobData.jobDetailsFromCompany && <div className={(JobData.maxExp && JobData.minExp)? 'jd-container' : ((!JobData.maxExp && !JobData.minExp)? 'jd-container_2': 'jd-container_1')} id="text">{JobData.jobDetailsFromCompany}</div>}
-        {showBtn && <div className="show-btn">show more</div>}
+        {showBtn && <div className="show-btn" onClick={showMore}>show more</div>}
         {JobData.minExp && <div className="exp-container">
             <div className="exp-heading">Minimum experience </div>
             <p className="exp">{`${JobData.minExp}`} years</p>

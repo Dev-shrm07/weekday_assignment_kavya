@@ -8,8 +8,12 @@
     margin: 2rem;
     height: 80vh;
     position: relative;
-   
-}   
+    transition: transform 0.1s ease;
+}
+.card-container:hover{
+  transform: scale(1.02);
+}
+ 
 
 .update{
     font-size: 0.5rem;
@@ -30,6 +34,8 @@
     
     
 }
+
+
 
 .logo-container>img{
     width: 30px;
@@ -96,7 +102,9 @@
     bottom: 25px;
     width: 80%;
 }
-
+.apply-btn:hover{
+    background-color: rgb(0, 190, 126);
+}
 @media (max-width: 800px) {
     .card-container{
         width: 40vw;
