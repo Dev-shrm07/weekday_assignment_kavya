@@ -15,7 +15,7 @@ async function fetchData(input, init) {
 
 //fetching the data from weekday api
 
-export async function getJobs() {
+export async function getJobs(offset) {
   const response = await fetchData(
     "https://api.weekday.technology/adhoc/getSampleJdJSON",
     {
@@ -25,7 +25,7 @@ export async function getJobs() {
       },
       body: JSON.stringify({
         limit: 10,
-        offset: 0,
+        offset: offset,
       }),
     }
   );
