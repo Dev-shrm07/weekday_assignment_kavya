@@ -18,8 +18,7 @@ const App = () => {
 
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState(null);
+  
 
   async function getjobs() {
     try {
@@ -48,6 +47,13 @@ const App = () => {
     if (windowHeight + scrollTop >= documentHeight - 100 && !loading) {
       getjobs();
     }
+
+    if(window.scrollY==0){
+      setOffset(0)
+      setprevJobs([])
+      getjobs()
+    }
+    
   };
 
   useEffect(() => {
