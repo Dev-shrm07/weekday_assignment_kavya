@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
 import "./css/App.css";
-import * as API from "./networks/api";
+import { getSampleJdJSON } from "./jd";
 import Card from "./components/jobCard";
 import "./css/card.css";
 import Button from "@mui/material/Button";
@@ -9,59 +10,44 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
 import Header from "./components/Header";
 import Search from "./components/Search";
 
 const App = () => {
   //using use effect with [] as dependecny so that whenever the app is loaded it fetches the data from the api
-  const [prevJobs, setprevJobs] = useState([]);
-
-  const [loading, setLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
-
- function getjobs() {
-    setLoading(true)
-    const response = API.getJobs(offset)
-    const newJobs = response
-    console.log(newJobs)
-    setprevJobs((prevJobs) => [...prevJobs, ...newJobs]);
-    setOffset((offset) => offset + newJobs.length);
-    
-    setLoading(false)
-    
-  }
-  useEffect(() => {
-    getjobs();
-  }, []);
-
-  
-
-  const handleScroll = () => {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollTop =
-      window.scrollY ||
-      window.pageYOffset ||
-      document.body.scrollTop +
-        ((document.documentElement && document.documentElement.scrollTop) || 0);
-
-    if (windowHeight + scrollTop >= documentHeight - 100 && !loading) {
-      getjobs();
-    }
-
-    if (window.scrollY == 0 && prevJobs.length > 10) {
-      setprevJobs(prevJobs.slice(0,10))
-    }
-  };
+  const data = getSampleJdJSON();
+  const[Data,setData] = useState(data)
+  const [displayedData, setDisplayedData] = useState([]);
+  const [itemsToDisplay, setItemsToDisplay] = useState(10);
+  const loader = useRef(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    setDisplayedData(Data.slice(0, itemsToDisplay));
+  }, [itemsToDisplay, Data]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (first.isIntersecting) {
+          setItemsToDisplay((prevItemsToDisplay) => prevItemsToDisplay + 10);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    const currentObserver = loader.current;
+    if (currentObserver) {
+      observer.observe(currentObserver);
+    }
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (currentObserver) {
+        observer.unobserve(currentObserver);
+      }
     };
-  }, [loading]);
+  }, []);
 
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState(null);
@@ -75,17 +61,104 @@ const App = () => {
     setContent(text);
   };
 
-  
+  const HandleFilters = (filters) => {
+    
+
+
+    let filtered = [...data]; // Create a copy of the data array
+
+    // filter company name
+    if (filters.company) {
+      filtered = filtered.filter((job) =>
+        job.companyName.toLowerCase().includes(filters.company.toLowerCase())
+      );
+    }
+
+    // filter job role
+    if (filters.role.length > 0) {
+      filtered = filtered.filter((job) =>
+        filters.role.includes(job.jobRole.toLowerCase())
+      );
+    }
+
+    // filter location
+    if (filters.city.length > 0) {
+      filtered = filtered.filter((job) =>
+        filters.city.includes(job.location.toLowerCase())
+      );
+    }
+
+    // filter tech stack in description
+    if (filters.tech_stack.length > 0) {
+      filtered = filtered.filter((job) =>
+        filters.tech_stack.every((tech) =>
+          job.jobDetailsFromCompany.toLowerCase().includes(tech.toLowerCase())
+        )
+      );
+    }
+
+    // filter job type
+    if (filters.loc.length > 0) {
+      filtered = filtered.filter((job) =>{
+        if (job.location.toLowerCase() === "remote") {
+          return filters.loc.includes("remote");
+        } else if (job.location.toLowerCase() === "hybrid") {
+          return filters.loc.includes("hybrid");
+        } else {
+          return filters.loc.includes("office");
+        }
+      }
+        
+      );
+    }
+    //filter minimum salary
+    if(filters.minsal!=null){
+      filtered = filtered.filter((job) =>{
+        if (job.minJdSalary == null ) {
+          if(job.maxJdSalary==null){
+            return true
+          }else{
+            return job.maxJdSalary>=filters.minsal
+          }
+        
+        } else {
+          return job.minJdSalary>= filters.minsal;
+        }
+      }
+        
+      );
+    }
+    //filter minimum experience
+    if(filters.min_exp!=null){
+      filtered = filtered.filter((job) =>{
+        if (job.minExp == null ) {
+          if(job.maxExp==null){
+            return true
+          }else{
+            return job.maxExp>=filters.min_exp
+          }
+        
+        } else {
+          return job.minExp>= filters.min_exp;
+        }
+      }
+        
+      );
+    }
+
+
+    // Update the displayedData state with the filtered data
+    setData(filtered)
+  };
+
   return (
     <>
       <div className="app">
-        
-        <Header/>
-        <Search/>
-        </div>
+        <Header />
+        <Search searchFunction={HandleFilters} />
         <div className="card-container-box">
-          {prevJobs &&
-            prevJobs.map((m) => {
+          {displayedData &&
+            displayedData.map((m) => {
               return (
                 <Card
                   JobData={m}
@@ -95,7 +168,9 @@ const App = () => {
               );
             })}
         </div>
-        {loading && <CircularProgress />}
+        <div ref={loader}>
+          {displayedData.length < data.length && <CircularProgress />}
+        </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Job Description</DialogTitle>
           <DialogContent>
@@ -105,7 +180,7 @@ const App = () => {
             <Button onClick={handleClose}>Close</Button>
           </DialogActions>
         </Dialog>
-    
+      </div>
     </>
   );
 };
