@@ -1,4 +1,4 @@
-# GCandidate Application Platform
+# Candidate Application Platform
 
 I have completed the assignment as per the conditions and deadline.
 some of the key points for this project are:
