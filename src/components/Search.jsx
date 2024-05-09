@@ -1,7 +1,49 @@
 import Select from "react-select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/search.css"
 const Search = ({ searchFunction }) => {
+  
+  const [filter,setFilter] = useState({
+    company:"",
+    min_exp:null,
+    max_exp:null,
+    role:[],
+    loc:[],
+    minsal:null,
+    maxsal:null
+  })
+
+  const handleChange = (e)=>{
+    const {name,value} = e.target
+    setFilter({...filter, [name]:value})
+  }
+
+  
+
+  const HandleRoleChange = (selected) =>{
+    const value = selected.map(obj=>obj.value)
+    setFilter({...filter, ["role"]:value})
+    
+
+  }
+
+  const HandleLocChange = (selected) =>{
+    const value = selected.map(obj=>obj.value)
+    setFilter({...filter, ["loc"]:value})
+  }
+  
+  const HandleMinSal = (selected) =>{
+    setFilter({...filter, ["minsal"]:selected.value})
+    
+  }
+
+  const HandleMaxSal = (selected) =>{
+    setFilter({...filter, ["maxsal"]:selected.value})
+    
+  }
+  
+  
+
   const array_role = [
     "frontend",
     "backend",
@@ -28,7 +70,7 @@ const Search = ({ searchFunction }) => {
   ]
 
   const options_salary = []
-  for(let i = 0; i <11; i++){
+  for(let i = 0; i <31; i++){
     options_salary.push({label:`${i*10}K USD`, value:i*10})
   }
   
@@ -43,6 +85,7 @@ const Search = ({ searchFunction }) => {
             options={options_role}
             className="basic-multi-select"
             classNamePrefix="select"
+            onChange={HandleRoleChange}
             placeholder="role"
             styles={{
               input: (baseStyles, state) => ({
@@ -68,20 +111,20 @@ const Search = ({ searchFunction }) => {
                 height: "10px",
               }),
             }}
+            onChange={HandleLocChange}
           />
         </div>
         <div className="filter-min-exp">
-          <input placeholder="minimum experience in years" name="min_exp" type="numbers" min={0} max={10} className="inp"/>
+          <input placeholder="minimum experience in years" name="min_exp" type="numbers" min={0} max={10} className="inp" value={null} onChange={handleChange}/>
         </div>
 
         <div className="filter-max-exp">
-          <input placeholder="maximum experience in years" name = "max_exp" type="numbers" min={0} max={10} className="inp"/>
+          <input placeholder="maximum experience in years" name = "max_exp" type="numbers" min={0} max={10} className="inp" value={null} onChange={handleChange}/>
         </div>
 
         <div className="filter-salary-min">
           <Select
-            isMulti
-            name="min_salary"
+            name="min_sal"
             options={options_salary}
             className="basic-multi-select"
             classNamePrefix="select"
@@ -93,13 +136,13 @@ const Search = ({ searchFunction }) => {
                 height: "10px",
               }),
             }}
+            onChange={HandleMinSal}
           />
         </div>
 
         <div className="filter-salary-max">
           <Select
-            isMulti
-            name="max_salary"
+            name="max_sal"
             options={options_salary}
             className="basic-multi-select"
             classNamePrefix="select"
@@ -111,10 +154,11 @@ const Search = ({ searchFunction }) => {
                 height: "10px",
               }),
             }}
+            onChange={HandleMaxSal}
           />
         </div>
         <div className="filter-company-name">
-            <input type="text" name="company" className="inp company" placeholder="company"/>
+            <input type="text" name="company" className="inp company" placeholder="company" value={filter.company} onChange={handleChange}/>
         </div>
 
         
